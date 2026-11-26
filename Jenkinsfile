@@ -17,10 +17,19 @@ steps{
 sh 'docker build -t welcome-app .'
 }
 }
-stage('Run Docker'){
+stage('Remove Old Container'){
 steps{
 sh 'docker rm -f welcome-container || true'
-sh 'docker run -d -p 8081:8080 --name welcome-container welcome-app'
+}
+}
+stage('Run Docker'){
+steps{
+sh 'docker run -d -p 8081:8081 --name welcome-container welcome-app'
+}
+}
+stage('Verify Deployment'){
+steps{
+sh 'docker ps'
 }
 }
 }
